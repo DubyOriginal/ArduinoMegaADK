@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">ArduinoMegaAdk</string>
+    <string name="motorSpeed">motor L speed: %d</string>
+</resources>
