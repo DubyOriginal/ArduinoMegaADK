@@ -193,7 +193,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             updateMsgList("mAccessory is NULL!");
         }
 
-
     }
 
     private void openAccessory(UsbAccessory accessory) {
@@ -234,11 +233,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             while (ret >= 0) {
                 try {
                     ret = mInputStream.read(buffer);
+                    updateMsgList("mInputStream " + mInputStream);
                 } catch (IOException e) {
                     updateMsgList("IOException " + e);
                     break;
                 }
-                switch (buffer[0]) {
+                byte codeCMD = buffer[0];
+                switch (codeCMD) {
                     case Const.CMD_CURRENT:
                         if (buffer[1] == Const.LMOTOR) {
                             final float temperatureValue = (((buffer[2] & 0xFF) << 24) + ((buffer[3] & 0xFF) << 16) + ((buffer[4] & 0xFF) << 8) + (buffer[5] & 0xFF));
@@ -246,7 +247,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         }
                         break;
                     default:
-                        updateMsgList("unknown msg " +  buffer[0]);
+                        updateMsgList("unknown msg " +  codeCMD);
                         break;
                 }
             }
